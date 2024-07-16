@@ -4,12 +4,27 @@
 sudo apt-get update
 sudo apt-get install -y curl
 
-# Install Node.js and npm using NodeSource
-curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
-sudo apt-get install -y nodejs
+# Check if Node.js is installed
+if ! command -v node &> /dev/null; then
+    echo "Node.js not found. Installing Node.js and npm..."
+    curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+else
+    echo "Node.js is already installed."
+fi
+
+# Check if npm is installed
+if ! command -v npm &> /dev/null; then
+    echo "npm not found. Installing npm..."
+    sudo apt-get install -y npm
+else
+    echo "npm is already installed."
+fi
 
 # Verify Node.js and npm installation
+echo "Node.js version:"
 node --version
+echo "npm version:"
 npm --version
 
 # Install pm2 which is a production process manager for Node.js with a built-in load balancer.
